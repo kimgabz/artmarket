@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>585956798097-i24edkbkrbpasmb2jn060nl4bk92filg.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.585956798097-i24edkbkrbpasmb2jn060nl4bk92filg</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD5JwCkYfOy-a-IejfvDfsJvkKFUPko29Q</string>
+	<key>GCM_SENDER_ID</key>
+	<string>585956798097</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.cdenomad.ArtMarket</string>
+	<key>PROJECT_ID</key>
+	<string>artmarket-6088d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>artmarket-6088d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:585956798097:ios:725ed286245d2ddec9d930</string>
+	<key>DATABASE_URL</key>
+	<string>https://artmarket-6088d.firebaseio.com</string>
+</dict>
+</plist>
