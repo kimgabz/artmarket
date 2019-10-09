@@ -1,7 +1,8 @@
 project 'ArtMarket.xcodeproj'
 
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '10.0'
+
 def shared_pods
     pod 'Firebase/Core'
     pod 'Firebase/Auth'
@@ -29,5 +30,5 @@ target 'ArtMarketAdmin' do
 
   # Pods for ArtMarketAdmin
   shared_pods
-  pod 'CropViewController'
+#  pod 'CropViewController'
 end

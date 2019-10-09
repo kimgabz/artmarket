@@ -57,30 +57,46 @@ class RegisterVC: UIViewController {
         guard let email = emailTx.text, email.isNotEmpty,
             let userName = usernameTx.text, userName.isNotEmpty,
             let password = pswdTx.text, password.isNotEmpty
-            else {return}
+        else {
+            simpleAlert(title: "Error", msg: "Please fill out all fields")
+            return
+        }
         
+        guard let confirmPass = confirmPswdTx.text, confirmPass == password else {
+            simpleAlert(title: "Error", msg: "Passwords do not match")
+            return
+        }
+
         activityindicator.startAnimating()
 
-        Auth.auth().createUser(withEmail: email, password: password) { (authDataResult, error) in
-
+        guard let authUser = Auth.auth().currentUser else {
+            return
+        }
+        
+        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+        authUser.linkAndRetrieveData(with: credential) { (result, error) in
             if let error = error {
-                debugPrint(error)
+                debugPrint(error.localizedDescription)
+                Auth.auth().handleFireAuthError(error: error, vc: self)
+                self.activityindicator.stopAnimating()
                 return
             }
             
             self.activityindicator.stopAnimating()
-            print("Successfully registered new user")
+            self.dismiss(animated: true, completion: nil)
         }
+//        Auth.auth().createUser(withEmail: email, password: password) { (authDataResult, error) in
+//
+//            if let error = error {
+//                debugPrint(error)
+//                self.activityindicator.stopAnimating()
+//                return
+//            }
+//
+//            self.activityindicator.stopAnimating()
+//            self.dismiss(animated: true, completion: nil)
+//
+//        }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
