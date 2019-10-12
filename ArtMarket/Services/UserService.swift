@@ -64,6 +64,22 @@ final class _UserService {
         })
     }
     
+    func favoriteSelected(product: Product) {
+        let favsRef = db.collection("users").document(self.user.id).collection("favorites")
+        
+        if favorites.contains(product) {
+            // remove from favorites array
+            favorites.removeAll{ $0 == product }
+            favsRef.document(product.id).delete()
+        }
+        else {
+            // Add as favorite
+            favorites.append(product)
+            let data = Product.modelToData(product: product)
+            favsRef.document(product.id).setData(data)
+        }
+    }
+
     func logoutUser() {
         userListener?.remove()
         userListener = nil

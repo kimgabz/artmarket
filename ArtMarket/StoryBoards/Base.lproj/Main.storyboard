@@ -60,7 +60,11 @@
                         </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem image="bar_button_cart" id="Ltj-Wa-9Hc"/>
-                            <barButtonItem image="bar_button_star" id="fex-J0-0lk"/>
+                            <barButtonItem image="bar_button_star" id="fex-J0-0lk">
+                                <connections>
+                                    <action selector="favoritesClicked:" destination="BYZ-38-t0r" id="2Cb-XM-Mto"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -68,6 +72,7 @@
                         <outlet property="collectionView" destination="VZn-gR-rc8" id="ZwQ-ag-bEh"/>
                         <outlet property="loginBt" destination="u6W-VB-uZb" id="RwY-Of-Z1G"/>
                         <segue destination="xge-Bo-tjn" kind="show" identifier="toProductsVC" id="NpB-zy-ZXJ"/>
+                        <segue destination="xge-Bo-tjn" kind="show" identifier="toFavorites" id="Luk-9g-M8n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -141,4 +146,7 @@
         <image name="bar_button_star" width="26" height="26"/>
         <image name="bg_cat3" width="1500" height="1875"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Luk-9g-M8n"/>
+    </inferredMetricsTieBreakers>
 </document>

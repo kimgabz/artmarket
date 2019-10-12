@@ -9,6 +9,10 @@
 import UIKit
 import Kingfisher
 
+protocol ProductCellDelegate : class {
+    func prodcutFavorited(product: Product)
+}
+
 class ProductCell: UITableViewCell {
 
     // Outlet
@@ -16,7 +20,10 @@ class ProductCell: UITableViewCell {
     @IBOutlet weak var productTitle: UILabel!
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var favoriteBt: UIButton!
-    
+
+    weak var delegate : ProductCellDelegate?
+    private var product : Product!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,11 +35,14 @@ class ProductCell: UITableViewCell {
 //        // Configure the view for the selected state
 //    }
     
-    func configureCell(product: Product) {
+    func configureCell(product: Product, delegate: ProductCellDelegate) {
+        self.product = product
+        self.delegate = delegate
+
         productTitle.text = product.name
-        
+
         if let url = URL(string: product.imageUrl) {
-            let placeholder = UIImage(named: "placeholder")
+            let placeholder = UIImage(named: AppImages.placeHolder)
             productImg.kf.indicatorType = .activity
             let options : KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
             productImg.kf.setImage(with: url, placeholder: placeholder, options: options)
@@ -44,11 +54,21 @@ class ProductCell: UITableViewCell {
         if let price = formatter.string(from: product.price as NSNumber) {
             productPrice.text = price
         }
+        
+        if userService.favorites.contains(product) {
+            favoriteBt.setImage(UIImage(named: AppImages.filledStar), for: .normal)
+        }
+        else {
+            favoriteBt.setImage(UIImage(named: AppImages.emptyStar), for: .normal)
+        }
     }
+
     @IBAction func addToCartBt(_ sender: Any) {
+
     }
-    
+
     @IBAction func favoriteBt(_ sender: Any) {
+        delegate?.prodcutFavorited(product: self.product)
     }
-    
+
 }
