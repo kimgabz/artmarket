@@ -69,12 +69,26 @@ class RegisterVC: UIViewController {
 
         activityindicator.startAnimating()
 
+//        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+//            if let error = error {
+//                debugPrint(error.localizedDescription)
+//                Auth.auth().handleFireAuthError(error: error, vc: self)
+//                self.activityindicator.stopAnimating()
+//                return
+//            }
+//
+//            guard let fireUser = result?.user else { return }
+//            let artUser = User.init(id: fireUser.uid, email: email, username: userName, stripeId: "")
+//            // upload to Firestore
+//            self.createFirestoreUser(user: artUser)
+//        }
+
         guard let authUser = Auth.auth().currentUser else {
             return
         }
-        
+
         let credential = EmailAuthProvider.credential(withEmail: email, password: password)
-        authUser.linkAndRetrieveData(with: credential) { (result, error) in
+        authUser.link(with: credential) { (result, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
                 Auth.auth().handleFireAuthError(error: error, vc: self)
@@ -82,21 +96,32 @@ class RegisterVC: UIViewController {
                 return
             }
             
-            self.activityindicator.stopAnimating()
-            self.dismiss(animated: true, completion: nil)
+            guard let fireUser = result?.user else { return }
+            let artUser = User.init(id: fireUser.uid, email: email, username: userName, stripeId: "")
+            // upload to Firestore
+            self.createFirestoreUser(user: artUser)
         }
-//        Auth.auth().createUser(withEmail: email, password: password) { (authDataResult, error) in
-//
-//            if let error = error {
-//                debugPrint(error)
-//                self.activityindicator.stopAnimating()
-//                return
-//            }
-//
-//            self.activityindicator.stopAnimating()
-//            self.dismiss(animated: true, completion: nil)
-//
-//        }
+
+    }
+    
+    func createFirestoreUser(user: User) {
+        // create document
+        let newUserRef = Firestore.firestore().collection("users").document(user.id)
+        
+        // create model data
+        let data = User.modelToData(user: user)
+        
+        // upload to Firestore
+        newUserRef.setData(data, merge: true) { (error) in
+            if let error = error {
+                Auth.auth().handleFireAuthError(error: error, vc: self)
+                debugPrint("Error signing in: \(error.localizedDescription)")
+            }
+            else {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        self.activityindicator.stopAnimating()
     }
 
 }
