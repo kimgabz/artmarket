@@ -38,6 +38,9 @@ class HomeVC: UIViewController {
         if let user = Auth.auth().currentUser, !user.isAnonymous {
             // We are Logged in
             loginBt.title = "Logout"
+            if userService.userListener == nil {
+                userService.getCurrentUser()
+            }
         }
         else {
             loginBt.title = "Login"
@@ -50,6 +53,15 @@ class HomeVC: UIViewController {
         collectionView.reloadData()
     }
 
+    @IBAction func favoritesClicked(_ sender: Any) {
+        if userService.isGuest {
+            self.simpleAlert(title: "Error", msg: "Please log-in to view liked products")
+            return
+        }
+
+        performSegue(withIdentifier: Segues.toFavorites, sender: self)
+    }
+
     @IBAction func loginOutClicked(_ sender: Any) {
     
         guard let user = Auth.auth().currentUser else { return }
@@ -59,6 +71,7 @@ class HomeVC: UIViewController {
         else {
             do {
                 try Auth.auth().signOut()
+                userService.logoutUser()
                 Auth.auth().signInAnonymously { (result, error) in
                     if let error = error {
                         debugPrint(error.localizedDescription)
@@ -114,7 +127,7 @@ class HomeVC: UIViewController {
                     self.onDocumentModified(document: body, category: category)
                 case .removed:
                     self.onDocumentRemoved(document: body)
-                @unknown default:
+                default:
                     fatalError()
                 }
             })
@@ -195,6 +208,12 @@ extension HomeVC : UICollectionViewDelegate, UICollectionViewDataSource, UIColle
         if segue.identifier == Segues.ToProducts {
             if let destination = segue.destination as? ProductsVC {
                 destination.category = selectedCategory
+            }
+        }
+        else if segue.identifier == Segues.toFavorites {
+            if let destination = segue.destination as? ProductsVC {
+                destination.category = selectedCategory
+                destination.showFavorites = true
             }
         }
     }

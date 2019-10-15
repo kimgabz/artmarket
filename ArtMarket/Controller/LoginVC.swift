@@ -20,6 +20,7 @@ class LoginVC: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+
     @IBAction func forgotPswdBt(_ sender: Any) {
         let vc = ForgotPasswordVC()
         vc.modalTransitionStyle = .crossDissolve
@@ -27,6 +28,7 @@ class LoginVC: UIViewController {
         present(vc, animated: true, completion: nil)
 
     }
+
     @IBAction func loginBt(_ sender: Any) {
         guard let email = emailTx.text, email.isNotEmpty,
             let password = pswdTx.text, password.isNotEmpty
@@ -53,5 +55,6 @@ class LoginVC: UIViewController {
     }
     
     @IBAction func contGuestBt(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
 }

@@ -20,6 +20,26 @@ struct Product {
     var stock: Int
     var favorite: Bool
     
+    init(
+        name:String,
+        id: String,
+        category: String,
+        price: Double,
+        productDescription: String,
+        imageUrl: String,
+        timeStamp: Timestamp = Timestamp(),
+        stock: Int = 0) {
+        self.name = name
+        self.id = id
+        self.category = category
+        self.price = price
+        self.productDescription = productDescription
+        self.imageUrl = imageUrl
+        self.timeStamp = timeStamp
+        self.stock = stock
+        self.favorite = false
+    }
+
     init(data: [String: Any]) {
         self.name = data["name"] as? String ?? ""
         self.id = data["id"] as? String ?? ""
@@ -30,5 +50,26 @@ struct Product {
         self.timeStamp = data["name"] as? Timestamp ?? Timestamp()
         self.stock = data["stock"] as? Int ?? 0
         self.favorite = data["favorite"] as? Bool ?? true
+    }
+    
+    static func modelToData(product: Product) -> [String: Any] {
+        let data : [String: Any] = [
+            "name" : product.name,
+            "id" : product.id,
+            "category" : product.category,
+            "price" : product.price,
+            "productDescription" : product.productDescription,
+            "imageUrl" : product.imageUrl,
+            "timeStamp" : product.timeStamp,
+            "stock" : product.stock,
+            "favorite" : product.favorite,
+        ]
+        return data
+    }
+}
+
+extension Product : Equatable {
+    static func == (lhs: Product, rhs: Product) -> Bool {
+        return lhs.id == rhs.id
     }
 }

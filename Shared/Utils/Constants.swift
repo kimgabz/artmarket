@@ -20,6 +20,9 @@ struct StoryboardId {
 struct AppImages {
     static let greenCheck = "green_check"
     static let redCheck = "red_check"
+    static let filledStar = "filled_star"
+    static let emptyStar = "empty_star"
+    static let placeHolder = "placeholder"
 }
 
 struct AppColors {
@@ -31,9 +34,14 @@ struct AppColors {
 struct Identifiers {
     static let CategoryCell = "CategoryCell"
     static let ProductCell = "ProductCell"
+    static let CartItemCell = "CartItemCell"
     
 }
 
 struct Segues {
     static let ToProducts = "toProductsVC"
+    static let ToAddEditCategory = "ToAddEditCategory"
+    static let toEditCategory = "toEditCategory"
+    static let toAddEditProduct = "toAddEditProduct"
+    static let toFavorites = "toFavorites"
 }
