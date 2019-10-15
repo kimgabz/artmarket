@@ -54,6 +54,11 @@ class HomeVC: UIViewController {
     }
 
     @IBAction func favoritesClicked(_ sender: Any) {
+        if userService.isGuest {
+            self.simpleAlert(title: "Error", msg: "Please log-in to view liked products")
+            return
+        }
+
         performSegue(withIdentifier: Segues.toFavorites, sender: self)
     }
 
@@ -122,7 +127,7 @@ class HomeVC: UIViewController {
                     self.onDocumentModified(document: body, category: category)
                 case .removed:
                     self.onDocumentRemoved(document: body)
-                @unknown default:
+                default:
                     fatalError()
                 }
             })

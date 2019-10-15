@@ -60,17 +60,31 @@ class ProductsVC: UIViewController, ProductCellDelegate {
                     self.onDocumentModified(document: documentChange, product: product)
                 case .removed:
                     self.onDocumentRemoved(document: documentChange)
-                @unknown default:
+                default:
                     fatalError()
                 }
             })
         })
     }
     
-    func prodcutFavorited(product: Product) {
+    func productFavorited(product: Product) {
+        if userService.isGuest {
+            self.simpleAlert(title: "Error", msg: "Please log-in to like product")
+            return
+        }
+
         userService.favoriteSelected(product: product)
         guard let index = products.firstIndex(of: product) else { return }
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: UITableView.RowAnimation.automatic)
+    }
+    
+    func productAddTOCart(product: Product) {
+        if userService.isGuest {
+            self.simpleAlert(title: "Error", msg: "Please log-in to like product")
+            return
+        }
+
+        StripeCart.addItemToCart(item: product)
     }
 }
 

@@ -10,7 +10,8 @@ import UIKit
 import Kingfisher
 
 protocol ProductCellDelegate : class {
-    func prodcutFavorited(product: Product)
+    func productFavorited(product: Product)
+    func productAddTOCart(product: Product)
 }
 
 class ProductCell: UITableViewCell {
@@ -64,11 +65,11 @@ class ProductCell: UITableViewCell {
     }
 
     @IBAction func addToCartBt(_ sender: Any) {
-
+        delegate?.productAddTOCart(product: self.product)
     }
 
     @IBAction func favoriteBt(_ sender: Any) {
-        delegate?.prodcutFavorited(product: self.product)
+        delegate?.productFavorited(product: self.product)
     }
 
 }

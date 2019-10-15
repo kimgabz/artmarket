@@ -47,4 +47,13 @@ class AdminProductsVC: ProductsVC {
             }
         }
     }
+    
+    // We dont need to star products at admin side
+    override func productFavorited(product: Product) {
+        return
+    }
+    
+    override func productAddTOCart(product: Product) {
+        return
+    }
 }

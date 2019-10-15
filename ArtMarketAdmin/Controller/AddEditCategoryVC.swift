@@ -25,6 +25,7 @@ class AddEditCategoryVC: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(imgTapped(_:)))
         tap.numberOfTapsRequired = 1
         categoryImg.isUserInteractionEnabled = true
+        categoryImg.clipsToBounds = true
         categoryImg.addGestureRecognizer(tap)
         
         if let category = categoryToEdit {
@@ -32,8 +33,9 @@ class AddEditCategoryVC: UIViewController {
             addBtn.setTitle("Save Changes", for: .normal)
             
             if let url = URL(string: category.imgUrl) {
-                categoryImg.contentMode = .scaleAspectFill
+                categoryImg.contentMode = .scaleToFill
                 categoryImg.kf.setImage(with: url)
+                
             }
         }
     }
@@ -131,6 +133,7 @@ extension AddEditCategoryVC: UIImagePickerControllerDelegate, UINavigationContro
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
+        categoryImg.contentMode = .scaleAspectFill
         categoryImg.image = image
         dismiss(animated: true, completion: nil)
         

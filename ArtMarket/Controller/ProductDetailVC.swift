@@ -46,7 +46,13 @@ class ProductDetailVC: UIViewController {
     }
 
     @IBAction func addCartBt(_ sender: Any) {
+        if userService.isGuest {
+            self.simpleAlert(title: "Error", msg: "Please log-in to buy this product")
+            return
+        }
+
         // add product to cart
+        StripeCart.addItemToCart(item: product)
         dismiss(animated: true, completion: nil)
     }
 
